@@ -36,6 +36,7 @@ def pregunta_02():
 
     # Importe numpy
     import numpy as np
+    from sklearn.linear_model import LinearRegression 
 
     x_poly, y = pregunta_01()
 
@@ -44,18 +45,18 @@ def pregunta_02():
     n_iterations = 1000
 
     # Defina el parámetro inicial `params` como un arreglo de tamaño 3 con ceros
-    params = np.zeros(3)
-    print(params)
+    params = np.zeros(x_poly.shape[1])
+    #print(params)
     for _ in range(n_iterations):
 
         # Compute el pronóstico con los parámetros actuales
-        y_pred = np.linspace(min(x_poly), max(x_poly))
+        y_pred = np.matmul(x_poly, params)
 
         # Calcule el error
         error = y_pred - y
 
         # Calcule el gradiente
-        gradient = -2 * sum(error)
+        gradient = x_poly.T.dot(error)
 
         # Actualice los parámetros
         params = params - learning_rate * gradient
